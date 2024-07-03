@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<script>
+    console.log("login pages");
+    // 使用URL接口来创建一个URL对象
+    const url = new URL(location.href.toLowerCase())
+    // 使用URLSearchParams来获取查询参数
+    const params = new URLSearchParams(url.search);
+    // 获取returnUrl参数
+    const returnUrl = params.get('returnurl');
+    // 输出returnUrl参数的值
+    console.log(returnUrl);
+    function getReturnUrl() {
+        // 使用URL接口来创建一个URL对象
+        var url = new URL(location.href.toLowerCase())
+        // 使用URLSearchParams来获取查询参数
+        var  params = new URLSearchParams(url.search);
+        // 获取returnUrl参数
+        var  returnUrl = params.get('returnurl');
+        returnUrl;
+    }
+</script>
+<div>
+    @if (User != null && User.Identity.IsAuthenticated)
+    {
+        <div><label>用户名：@User.Identity.Name</label><a href="/login/SignOut">退出</a></div>
+    }
+    else
+    {
+
+        <form enctype="application/x-www-form-urlencoded" method="post" action="/login/signIn?returnurl=@Context.Request.Query["returnurl"]">
+            <div>
+                <label>用户名：<input type="text" name="userName" /></label><br />
+                <label>密码：<input type="password" name="password" /></label><br />
+                <button type="submit">登录</button>
+            </div>
+        </form>
+    }
+</div>
